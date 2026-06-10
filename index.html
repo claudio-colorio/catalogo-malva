@@ -3,49 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malva | Bienestar Íntimo - Catálogo</title>
+    <title>Catálogo Malva Íntima</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        // Configuración de colores
+        tailwind.config = { theme: { extend: { colors: { malva: { 700: '#9627a3', 800: '#7d2286' } } } } }
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <header class="bg-white p-6 shadow-sm text-center">
-        <h1 class="text-3xl font-bold text-malva-800">MALVA ÍNTIMA</h1>
-        <input type="text" id="buscador" placeholder="Buscar productos..." class="mt-4 w-full md:w-1/2 p-2 border rounded-full text-center">
+    <header class="bg-white p-6 shadow-sm sticky top-0 z-40">
+        <h1 class="text-2xl font-bold text-malva-800 text-center">MALVA ÍNTIMA</h1>
+        <input type="text" id="buscador" placeholder="Buscar producto..." class="mt-4 w-full p-2 border rounded-full text-center focus:ring-2 focus:ring-malva-700 outline-none">
     </header>
 
     <main class="max-w-6xl mx-auto p-4">
-        <div id="grilla" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div id="grilla-productos" class="grid grid-cols-2 md:grid-cols-4 gap-6">
             </div>
     </main>
 
     <script>
         // URL de tu Google Sheet publicado como CSV
-        const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQpJAxEgBgMJrIQ9i11kKAV7CMSy7ynDEeFsTg5fmXSG5Zsn9oS8ecWoIX9RAHAoPl2P5J8NzlzrOD9/pub?output=csv';
+        const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQpJAxEgBgMJrIQ9i11kKAV7CMSy7ynDEeFsTg5fmXSG5Zsn9oS8ecWoIX9RAHAoPl2P5J8NzlzrOD9/pubhtml?gid=193245431&single=true'; 
+        let productosGlobales = [];
 
         Papa.parse(URL_CSV, {
             download: true,
             header: true,
             complete: function(results) {
-                const grilla = document.getElementById('grilla');
-                grilla.innerHTML = '';
-                
-                results.data.forEach(prod => {
-                    if (!prod.Nombre) return; // Salta filas vacías
-                    
-                    grilla.innerHTML += `
-                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                            <img src="${prod.Imagen || 'https://via.placeholder.com/300'}" class="w-full h-48 object-cover rounded-xl">
-                            <h2 class="font-bold text-sm mt-3">${prod.Nombre}</h2>
-                            <p class="text-purple-700 font-black mt-1">$${prod.Precio}</p>
-                            <button class="w-full mt-3 bg-gray-900 text-white py-2 rounded-lg text-xs font-bold hover:bg-purple-700">Ver más</button>
-                        </div>
-                    `;
-                });
+                productosGlobales = results.data.map((prod, index) => ({
+                    id: index,
+                    nombre: prod.Nombre,
+                    precio: prod.Precio,
+                    imagenes: prod.Imagen ? prod.Imagen.split(',') : ['https://via.placeholder.com/300'],
+                    descripcion: prod.Descripcion || ''
+                }));
+                renderizar(productosGlobales);
             }
         });
+
+        function renderizar(lista) {
+            const grilla = document.getElementById('grilla-productos');
+            grilla.innerHTML = lista.map(p => `
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                    <img src="${p.imagenes[0]}" class="w-full h-48 object-cover rounded-xl">
+                    <h2 class="font-bold text-sm mt-3">${p.nombre}</h2>
+                    <p class="text-malva-800 font-black">$${p.precio}</p>
+                </div>
+            `).join('');
+        }
     </script>
 </body>
 </html>
