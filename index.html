@@ -3,118 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malva Íntima | Catálogo</title>
-    <!-- Tailwind CSS -->
+    <title>Malva | Bienestar Íntimo - Catálogo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <!-- PapaParse para CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <!-- Swiper CSS/JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <script>
-        tailwind.config = { theme: { extend: { colors: { malva: { 600: '#b832c8', 700: '#9627a3', 800: '#7d2286' } } } } }
-    </script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Header -->
-    <header class="bg-white border-b sticky top-0 z-40 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <h1 class="text-2xl font-bold text-malva-700 tracking-wide">MALVA ÍNTIMA</h1>
-            <input type="text" id="buscador" placeholder="Buscar producto..." class="w-full md:w-80 px-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-malva-400">
-        </div>
-        <div id="contenedor-filtros" class="bg-gray-50 py-3 px-4 flex flex-wrap gap-2 justify-center"></div>
+    <header class="bg-white p-6 shadow-sm text-center">
+        <h1 class="text-3xl font-bold text-malva-800">MALVA ÍNTIMA</h1>
+        <input type="text" id="buscador" placeholder="Buscar productos..." class="mt-4 w-full md:w-1/2 p-2 border rounded-full text-center">
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        <div id="grilla-productos" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+    <main class="max-w-6xl mx-auto p-4">
+        <div id="grilla" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            </div>
     </main>
 
-    <!-- Modal -->
-    <div id="mi-modal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative">
-            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            <div id="modal-cuerpo" class="grid md:grid-cols-2 gap-6">
-                <!-- Swiper -->
-                <div class="swiper contenedorModalSwiper h-64 bg-gray-100 rounded-xl overflow-hidden">
-                    <div class="swiper-wrapper" id="modal-carrusel-wrapper"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-                <div>
-                    <h2 id="modal-titulo" class="text-xl font-bold"></h2>
-                    <p id="modal-precio" class="text-2xl font-black text-malva-700 my-4"></p>
-                    <a id="btn-whatsapp" href="#" target="_blank" class="block bg-emerald-600 text-white text-center py-3 rounded-xl font-bold">Consultar por WhatsApp</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // URL de tu Google Sheet publicado como CSV
         const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQpJAxEgBgMJrIQ9i11kKAV7CMSy7ynDEeFsTg5fmXSG5Zsn9oS8ecWoIX9RAHAoPl2P5J8NzlzrOD9/pub?output=csv';
-        let productosGlobales = [];
 
-        async function cargarDatos() {
-            Papa.parse(URL_CSV, {
-                download: true, header: true, complete: function(results) {
-                    productosGlobales = results.data.filter(p => p.Nombre);
-                    renderizarFiltros();
-                    renderizarProductos();
-                }
-            });
-        }
-
-        function renderizarFiltros() {
-            const cats = ["Todos", ...new Set(productosGlobales.map(p => p.Categoria))];
-            document.getElementById('contenedor-filtros').innerHTML = cats.map(cat => 
-                `<button onclick="filtrar('${cat}')" class="px-4 py-1 rounded-full bg-white border text-xs font-bold hover:bg-malva-600 hover:text-white transition">${cat}</button>`
-            ).join('');
-        }
-
-        function renderizarProductos(cat = "Todos") {
-            const grilla = document.getElementById('grilla-productos');
-            const filtrados = cat === "Todos" ? productosGlobales : productosGlobales.filter(p => p.Categoria === cat);
-            grilla.innerHTML = filtrados.map(prod => `
-                <div class="bg-white rounded-2xl shadow-sm border p-4 cursor-pointer" onclick="abrirModal(${JSON.stringify(prod).replace(/"/g, '&quot;')})">
-                    <img src="${prod.Imagen || 'https://via.placeholder.com/300'}" class="w-full h-40 object-cover rounded-xl">
-                    <h3 class="font-bold text-sm mt-2">${prod.Nombre}</h3>
-                    <p class="text-malva-700 font-black">$${prod.Precio}</p>
-                </div>
-            `).join('');
-        }
-
-        function filtrar(cat) { renderizarProductos(cat); }
-
-        function abrirModal(prod) {
-            document.getElementById('modal-titulo').innerText = prod.Nombre;
-            document.getElementById('modal-precio').innerText = '$' + prod.Precio;
-            document.getElementById('btn-whatsapp').href = `https://wa.me/5491123456789?text=Hola, quiero este producto: ${prod.Nombre}`;
-            
-            const wrapper = document.getElementById('modal-carrusel-wrapper');
-            wrapper.innerHTML = `<div class="swiper-slide flex items-center justify-center"><img src="${prod.Imagen}"></div>`;
-            
-            document.getElementById('mi-modal').classList.remove('hidden');
-            new Swiper('.contenedorModalSwiper', { navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } });
-        }
-
-        function cerrarModal() { document.getElementById('mi-modal').classList.add('hidden'); }
-
-        document.getElementById('buscador').addEventListener('input', (e) => {
-            const busqueda = e.target.value.toLowerCase();
-            const grilla = document.getElementById('grilla-productos');
-            grilla.innerHTML = productosGlobales.filter(p => p.Nombre.toLowerCase().includes(busqueda)).map(prod => `
-                <div class="bg-white rounded-2xl shadow-sm border p-4" onclick="abrirModal(${JSON.stringify(prod).replace(/"/g, '&quot;')})">
-                    <img src="${prod.Imagen || 'https://via.placeholder.com/300'}" class="w-full h-40 object-cover rounded-xl">
-                    <h3 class="font-bold text-sm mt-2">${prod.Nombre}</h3>
-                    <p class="text-malva-700 font-black">$${prod.Precio}</p>
-                </div>
-            `).join('');
+        Papa.parse(URL_CSV, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const grilla = document.getElementById('grilla');
+                grilla.innerHTML = '';
+                
+                results.data.forEach(prod => {
+                    if (!prod.Nombre) return; // Salta filas vacías
+                    
+                    grilla.innerHTML += `
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                            <img src="${prod.Imagen || 'https://via.placeholder.com/300'}" class="w-full h-48 object-cover rounded-xl">
+                            <h2 class="font-bold text-sm mt-3">${prod.Nombre}</h2>
+                            <p class="text-purple-700 font-black mt-1">$${prod.Precio}</p>
+                            <button class="w-full mt-3 bg-gray-900 text-white py-2 rounded-lg text-xs font-bold hover:bg-purple-700">Ver más</button>
+                        </div>
+                    `;
+                });
+            }
         });
-
-        cargarDatos();
     </script>
 </body>
 </html>
