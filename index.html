@@ -271,7 +271,7 @@
 
         async function cargarProductos() {
             try {
-                const respuesta = await fetch('http://localhost:3000/api/productos');
+                const respuesta = await fetch('/api/productos');
                 const datos = await respuesta.json();
                 
                 todosLosProductos = datos;
@@ -649,7 +649,7 @@
                         </div>
                     </div>
 
-                    <button onclick="agregarAlCarrito(${index}); ocultarModal();" class="w-full bg-malva-700 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-malva-900 transition flex items-center justify-center gap-2 text-xs tracking-wide cursor-pointer">
+                    <button onclick="agregarAlCarrito(${indiceOriginal}); ocultarModal();"" class="w-full bg-malva-700 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-malva-900 transition flex items-center justify-center gap-2 text-xs tracking-wide cursor-pointer">
                         Agregar este artículo al Pedido 🛒
                     </button>
                 </div>
