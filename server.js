@@ -10,12 +10,16 @@ app.use(express.json());
 
 app.use(express.static('.'));
 
-const credenciales = JSON.parse(fs.readFileSync('./claves-google.json', 'utf8'));
+const credenciales = JSON.parse(
+  fs.readFileSync('./claves-google.json', 'utf8')
+);
 
 const serviceAccountAuth = new JWT({
   email: credenciales.client_email,
-  key: credenciales.private_key,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+  key: credenciales.private_key.replace(/\\n/g, '\n'),
+  scopes: [
+    'https://www.googleapis.com/auth/spreadsheets.readonly'
+  ],
 });
 
 app.get('/api/productos', async (req, res) => {
