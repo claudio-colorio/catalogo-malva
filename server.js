@@ -14,6 +14,9 @@ const credenciales = JSON.parse(
   fs.readFileSync('./claves-google.json', 'utf8')
 );
 
+console.log("EMAIL:", credenciales.client_email);
+console.log("KEY:", credenciales.private_key.substring(0, 50));
+
 const serviceAccountAuth = new JWT({
   email: credenciales.client_email,
   key: credenciales.private_key.replace(/\\n/g, '\n'),
