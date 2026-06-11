@@ -75,9 +75,10 @@ app.get('/api/productos', async (req, res) => {
 
     res.json(productos);
   } catch (error) {
-    console.error("Error al leer datos:", error);
-    res.status(500).json({ error: 'Error interno en el servidor' });
-  }
+  console.error("Error completo:", error);
+  console.error("Respuesta Google:", error.response?.data);
+  res.status(500).json({ error: 'Error interno en el servidor' });
+}
 });
 
 const PORT = process.env.PORT || 3000;
