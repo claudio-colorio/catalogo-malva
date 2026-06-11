@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static('.'));
+
 const credenciales = JSON.parse(fs.readFileSync('./claves-google.json', 'utf8'));
 
 const serviceAccountAuth = new JWT({
