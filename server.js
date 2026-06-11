@@ -19,7 +19,7 @@ console.log("KEY:", credenciales.private_key.substring(0, 50));
 
 const serviceAccountAuth = new JWT({
   email: credenciales.client_email,
-  key: credenciales.private_key.replace(/\\n/g, '\n'),
+  key: credenciales.private_key,
   scopes: [
     'https://www.googleapis.com/auth/spreadsheets.readonly'
   ],
