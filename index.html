@@ -67,7 +67,7 @@
             <div class="flex items-center justify-between w-full lg:w-auto gap-4 self-start lg:self-center">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 rounded-full bg-malva-50 flex items-center justify-center overflow-hidden border border-malva-100">
-                        <img src="Logo sin fondo.png" alt="Malva Logo" class="w-full h-full object-contain" onerror="this.src='✨'">
+                        <img src="Logo sin fondo.png" alt="Malva Logo" class="w-full h-full object-contain" onerror="this.style.display='none'">
                     </div>
                     <div>
                         <h1 class="text-2xl font-serif font-bold text-malva-700 tracking-wide leading-none">Malva</h1>
@@ -269,21 +269,35 @@
         let subcategoriaSeleccionada = 'Todas';
         let miSwiperModal = null;
 
-        async function cargarProductos() {
-            try {
-                const respuesta = await fetch('/api/productos');
-                const datos = await respuesta.json();
-                
-                todosLosProductos = datos;
-                crearBotonesFiltros();
-                crearBotonesSubcategorias();
-                mostrarProductos(todosLosProductos);
-            } catch (error) {
-                console.error("Error al cargar productos:", error);
-                document.getElementById('grilla-productos').innerHTML = `<p class="text-center text-red-500 font-bold col-span-full">Error al conectar con el servidor.</p>`;
-            }
+async function cargarProductos() {
+    try {
+        const respuesta = await fetch('/api/productos');
+
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
         }
 
+        const datos = await respuesta.json();
+
+        todosLosProductos = datos;
+        crearBotonesFiltros();
+        crearBotonesSubcategorias();
+        mostrarProductos(todosLosProductos);
+
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
+
+        document.getElementById('grilla-productos').innerHTML = `
+            <p class="text-center text-red-500 font-bold col-span-full py-12">
+                Error al conectar con el servidor.
+                <br>
+                <span class="text-xs font-normal">
+                    Intentá actualizar la página.
+                </span>
+            </p>
+        `;
+    }
+}
         function mostrarProductos(lista) {
             const grilla = document.getElementById('grilla-productos');
             grilla.innerHTML = ''; 
@@ -365,7 +379,7 @@
             const prod = todosLosProductos[index];
             if (!prod) return;
 
-            const itemExistente = carrito.find(item => item.nombre === prod.nombre);
+            const itemExistente = carrito.find(item => item.codigo === prod.codigo);
 
             if (itemExistente) {
                 itemExistente.cantidad += 1;
@@ -468,7 +482,7 @@
         function alternarBotonMercadoPago() {
             const metodo = document.getElementById('metodo-pago').value;
             const btnMp = document.getElementById('wrapper-btn-mp');
-            if (metodo === 'Market Pago' || metodo === 'Mercado Pago') {
+            if (metodo === 'Mercado Pago') {
                 btnMp.classList.remove('hidden');
             } else {
                 btnMp.classList.add('hidden');
@@ -505,7 +519,7 @@
             mensaje += `💰 *TOTAL ESTIMADO: $${total.toLocaleString('es-AR')}*\n=========================\n\n`;
             mensaje += `Hola Malva, ¿me confirmarían stock disponible de estos productos? ¡Muchas gracias!`;
 
-            const nroTelefono = "+5491133998888"; 
+            const nroTelefono = "5491133998888";
             const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
@@ -649,7 +663,7 @@
                         </div>
                     </div>
 
-                    <button onclick="agregarAlCarrito(${indiceOriginal}); ocultarModal();"" class="w-full bg-malva-700 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-malva-900 transition flex items-center justify-center gap-2 text-xs tracking-wide cursor-pointer">
+                   <button onclick="agregarAlCarrito(${index}); ocultarModal();" class="w-full bg-malva-700 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-malva-900 transition flex items-center justify-center gap-2 text-xs tracking-wide cursor-pointer">
                         Agregar este artículo al Pedido 🛒
                     </button>
                 </div>
@@ -678,6 +692,7 @@
 
         function ocultarZoomExterno() {
             document.getElementById('modal-zoom-externo').classList.add('hidden');
+            document.getElementById('img-zoom-maximizada').src = '';
         }
 
         function ocultarModal() {
