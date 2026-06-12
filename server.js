@@ -30,7 +30,6 @@ app.get('/api/productos', async (req, res) => {
       let celdaImagen = row.get('Imagen') || '';
       let listaImagenes = [];
 
-      // Si la celda tiene texto, separamos por comas
       if (celdaImagen.trim() !== '') {
         const enlacesSeparados = celdaImagen.split(',');
         
@@ -42,26 +41,25 @@ app.get('/api/productos', async (req, res) => {
               listaImagenes.push(`https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`);
             }
           } else if (linkLimpio !== '') {
-            listaImagenes.push(linkLimpio); // Por si pones un link común de internet
+            listaImagenes.push(linkLimpio);
           }
         });
       }
 
-      // Si no tiene ninguna foto, le ponemos la gris por defecto
       if (listaImagenes.length === 0) {
         listaImagenes.push('https://via.placeholder.com/300x300?text=Sin+Foto');
       }
 
       return {
         nombre: row.get('Nombre'),
-        categoria: row.get('Categorias'), // Lee la columna B "Categorias"
-        color: row.get('Color'), // Lee la columna D "Color"
-        subcategoria: row.get('subcategoria'), // ¡Lee directo la columna F "subcategoria"!
+        categoria: row.get('Categorias'),
+        color: row.get('Color'),
+        subcategoria: row.get('subcategoria'),
         precio: row.get('Precio'),
         descripcion: row.get('Descripcion'),
         marca: row.get('Marca'),
         codigo: row.get('Codigo proveedor'),
-        imagenes: listaImagenes // IMPORTANTE: Ahora enviamos una LISTA de imágenes
+        imagenes: listaImagenes
       };
     });
 
