@@ -2,3 +2,6 @@ service-account.json
 *.json
 .env
 node_modules
+git add .gitignore
+git commit -m "ignore google credentials"
+git push origin main
