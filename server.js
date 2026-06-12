@@ -6,7 +6,7 @@ import { JWT } from 'google-auth-library';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.'));
+app.use(express.static(process.cwd()));
 
 const serviceAccountAuth = new JWT({
   email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -67,6 +67,10 @@ app.get('/api/productos', async (req, res) => {
     console.error("Error al leer datos:", error);
     res.status(500).json({ error: 'Error interno en el servidor' });
   }
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(process.cwd() + '/index.html');
 });
 
 const PORT = process.env.PORT || 3000;
