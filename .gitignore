@@ -1,7 +1,10 @@
+# Credenciales
+claves-google.json
 service-account.json
-*.json
+
+# Variables de entorno
 .env
-node_modules
-git add .gitignore
-git commit -m "ignore google credentials"
-git push origin main
+.env.local
+
+# Dependencias
+node_modules/
