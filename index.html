@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malva | Bienestar Íntimo - Catálogo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Estilos y Scripts Oficiales de Swiper.js para Carrusel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        malva: {
+                            50: '#fdf8f7',   
+                            100: '#f4eae8',  
+                            300: '#bfa3ca',  
+                            700: '#6c4275',  
+                            900: '#4a2b51',  
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-malva-gradient {
+            background: linear-gradient(135deg, #6c4275 0%, #4a2b51 100%);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fdf8f7; }
+        ::-webkit-scrollbar-thumb { background: #bfa3ca; border-radius: 10px; }
+
+        .swiper-button-next, .swiper-button-prev {
+            color: #6c4275 !important;
+            background-color: rgba(255, 255, 255, 0.75);
+            width: 34px !important;
+            height: 34px !important;
+            border-radius: 9999px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 14px !important;
+            font-weight: bold;
+        }
+        .swiper-pagination-bullet-active {
+            background: #6c4275 !important;
+        }
+    </style>
+</head>
+<body class="bg-malva-50 text-gray-700 font-sans antialiased">
+
+   <header class="bg-white text-gray-800 shadow-xs border-b border-malva-100 sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex flex-col lg:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center justify-between w-full lg:w-auto gap-4 self-start lg:self-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-malva-50 flex items-center justify-center overflow-hidden border border-malva-100">
+                        <img src="Logo sin fondo.png" alt="Malva Logo" class="w-full h-full object-contain" onerror="this.src='✨'">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-serif font-bold text-malva-700 tracking-wide leading-none">Malva</h1>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-malva-300 mt-1">Bienestar Íntimo</p>
+                    </div>
+                </div>
+
+                <a 
+                    href="https://www.instagram.com/malva.intima" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-1.5 bg-malva-50 hover:bg-malva-100 text-malva-700 font-medium text-xs px-3 py-2 rounded-xl border border-malva-100/70 transition-all duration-300 shadow-xs hover:scale-105"
+                    title="Seguinos en Instagram"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="hidden sm:inline">@Malva.Intima</span>
+                </a>
+            </div>
+            
+            <div class="w-full lg:w-auto flex flex-col items-center lg:items-end gap-3 flex-grow">
+                <div class="relative w-full md:w-80 self-center lg:self-auto">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-malva-300">🔍</span>
+                    <input 
+                        type="text" 
+                        id="input-busqueda" 
+                        placeholder="Buscar por modelo, marca o código..." 
+                        oninput="filtrarYBuscar()"
+                        class="w-full pl-10 pr-4 py-2.5 bg-malva-50/50 text-gray-800 placeholder-gray-400 border border-malva-100 rounded-xl focus:outline-none focus:border-malva-300 focus:bg-white transition text-sm"
+                    >
+                </div>
+                <div id="contenedor-filtros" class="flex flex-wrap gap-2 justify-center"></div>
+                <div id="contenedor-subfiltros" class="flex flex-wrap gap-1.5 justify-center transition-all duration-300 empty:h-0"></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-4 pt-8 pb-4 max-w-5xl">
+        <div class="bg-white/60 backdrop-blur-xs rounded-2xl p-6 border border-malva-100/40 shadow-xs">
+            <h2 class="text-lg font-serif font-bold text-malva-700 text-center mb-6 tracking-wide">Preguntas Frecuentes</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <div class="space-y-4">
+                    <div class="bg-white rounded-xl border border-malva-100/60 overflow-hidden shadow-xs">
+                        <button onclick="alternarFaq(this)" class="w-full px-5 py-4 text-left font-medium text-sm text-gray-800 flex justify-between items-center hover:bg-malva-50/50 transition focus:outline-none cursor-pointer">
+                            <span>¿Cómo realizo mi compra en el catálogo?</span>
+                            <span class="text-malva-300 text-xs transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-malva-50/30">
+                            <p class="p-5 text-xs text-gray-600 leading-relaxed">
+                                ¡Es súper fácil! Navegá por el catálogo, elegí los productos que más te gusten y agregalos al carrito. Cuando termines, completá tu nombre, seleccioná tu forma de pago y tocá el botón para enviarnos el pedido por WhatsApp. Ahí coordinamos la entrega de forma personalizada.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-malva-100/60 overflow-hidden shadow-xs">
+                        <button onclick="alternarFaq(this)" class="w-full px-5 py-4 text-left font-medium text-sm text-gray-800 flex justify-between items-center hover:bg-malva-50/50 transition focus:outline-none cursor-pointer">
+                            <span>¿Cuáles son los medios de pago disponibles?</span>
+                            <span class="text-malva-300 text-xs transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-malva-50/30">
+                            <p class="p-5 text-xs text-gray-600 leading-relaxed">
+                                Aceptamos efectivo, transferencias bancarias y todas las tarjetas a través de Mercado Pago. Al finalizar tu pedido por WhatsApp te facilitamos los datos de la cuenta o el enlace correspondiente según tu elección.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-white rounded-xl border border-malva-100/60 overflow-hidden shadow-xs">
+                        <button onclick="alternarFaq(this)" class="w-full px-5 py-4 text-left font-medium text-sm text-gray-800 flex justify-between items-center hover:bg-malva-50/50 transition focus:outline-none cursor-pointer">
+                            <span>¿Cómo son los envíos? ¿El empaque es discreto?</span>
+                            <span class="text-malva-300 text-xs transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-malva-50/30">
+                            <p class="p-5 text-xs text-gray-600 leading-relaxed">
+                                Absolutamente. Sabemos que la privacidad es lo primero, por lo que todos nuestros pedidos se entregan en bolsas o cajas totalmente lisas, cerradas y sin ningún tipo de logo o inscripción que revele el contenido. Hacemos envíos a coordinar según tu zona.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-malva-100/60 overflow-hidden shadow-xs">
+                        <button onclick="alternarFaq(this)" class="w-full px-5 py-4 text-left font-medium text-sm text-gray-800 flex justify-between items-center hover:bg-malva-50/50 transition focus:outline-none cursor-pointer">
+                            <span>¿Los productos tienen cambio o devolución?</span>
+                            <span class="text-malva-300 text-xs transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-malva-50/30">
+                            <p class="p-5 text-xs text-gray-600 leading-relaxed">
+                                Por razones de higiene y salud íntima, las prendas de lencería, juguetería y cosmética no tienen cambio ni devolución una vez retiradas o entregadas. Te recomendamos revisar bien las especificaciones o consultarnos tus dudas antes de finalizar la compra.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 py-6 mb-24">
+        <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </main>
+
+    <button onclick="alternarCarrito()" class="fixed bottom-6 right-6 bg-malva-700 text-white p-4 rounded-full shadow-2xl hover:bg-malva-900 transition-all duration-300 z-40 flex items-center gap-2 transform hover:scale-105 group cursor-pointer">
+        <span class="text-xl">🛒</span>
+        <span id="badge-contador-carrito" class="bg-malva-300 text-malva-700 text-xs font-black px-2 py-0.5 rounded-full border border-white">0</span>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-out font-medium text-xs whitespace-nowrap tracking-wide">Ver mi pedido</span>
+    </button>
+
+    <div id="panel-carrito" class="fixed inset-0 bg-malva-900/40 backdrop-blur-xs z-50 flex justify-end hidden" onclick="alternarCarrito()">
+        <div class="bg-white w-full max-w-md h-full flex flex-col justify-between p-6 shadow-2xl" onclick="event.stopPropagation()">
+            <div class="flex flex-col h-full overflow-hidden">
+                <div class="flex justify-between items-center pb-4 border-b border-malva-50 mb-4 flex-shrink-0">
+                    <h2 class="text-base font-bold text-malva-700 tracking-wide flex items-center gap-2">🛒 Tu Pedido</h2>
+                    <div class="flex items-center gap-3">
+                        <button id="btn-vaciar-carrito" onclick="vaciarCarrito()" class="text-[11px] font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-lg transition flex items-center gap-1 hidden cursor-pointer">
+                            🗑️ Vaciar
+                        </button>
+                        <button onclick="alternarCarrito()" class="text-gray-400 hover:text-malva-700 font-medium text-lg transition cursor-pointer">✕</button>
+                    </div>
+                </div>
+                <div id="items-carrito" class="space-y-4 overflow-y-auto flex-grow pr-1"></div>
+            </div>
+
+            <div class="pt-4 border-t border-malva-50 bg-white flex-shrink-0">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-400 text-sm font-medium">Total estimado:</span>
+                    <span id="total-carrito" class="text-xl font-bold text-malva-700">$0</span>
+                </div>
+
+                <div id="wrapper-nombre-cliente" class="mb-4 hidden space-y-3">
+                    <div>
+                        <label for="nombre-cliente" class="block text-[10px] font-bold text-malva-700 uppercase tracking-widest mb-1.5">Tu Nombre y Apellido:</label>
+                        <input 
+                            type="text" 
+                            id="nombre-cliente" 
+                            placeholder="Ej: María García" 
+                            class="w-full px-3 py-2 bg-malva-50 border border-malva-100 rounded-xl focus:outline-none focus:border-malva-300 focus:bg-white text-sm transition font-medium text-gray-800 placeholder-gray-400"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="metodo-pago" class="block text-[10px] font-bold text-malva-700 uppercase tracking-widest mb-1.5">Forma de Pago preferida:</label>
+                        <select 
+                            id="metodo-pago" 
+                            onchange="alternarBotonMercadoPago()"
+                            class="w-full px-3 py-2 bg-malva-50 border border-malva-100 rounded-xl focus:outline-none focus:border-malva-300 focus:bg-white text-sm transition font-medium text-gray-800 cursor-pointer"
+                        >
+                            <option value="Efectivo / Transferencia">Efectivo / Transferencia Bancaria</option>
+                            <option value="Mercado Pago">Mercado Pago</option>
+                        </select>
+                    </div>
+
+                    <div id="wrapper-btn-mp" class="hidden pt-1">
+                        <p class="text-[11px] text-gray-500 italic mb-2 text-center bg-malva-50 p-2 rounded-lg border border-malva-100/50">
+                            📌 Al abrir el enlace, por favor ingresá manualmente el monto total de tu pedido ($<span id="monto-recordatorio">0</span>).
+                        </p>
+                        <a 
+                            href="https://link.mercadopago.com.ar/malvaintima" 
+                            target="_blank" 
+                            class="w-full bg-[#009ee3] text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs text-xs tracking-wide hover:bg-[#0087c4] transition"
+                        >
+                            💙 Ir a Mercado Pago (Monto Abierto)
+                        </a>
+                    </div>
+                </div>
+
+                <button onclick="enviarPedidoWhatsApp()" class="w-full bg-green-600 text-white font-medium py-3 px-4 rounded-xl hover:bg-green-700 transition flex items-center justify-center gap-2 shadow-md text-sm tracking-wide cursor-pointer">
+                    💬 Enviar Consulta por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLE ORIGINAL -->
+    <div id="modal-producto" class="fixed inset-0 bg-malva-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden" onclick="ocultarModal()">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col md:flex-row overflow-hidden" onclick="event.stopPropagation()">
+            <button onclick="ocultarModal()" class="absolute top-4 right-4 bg-malva-50 text-malva-700 hover:bg-malva-100 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30 transition cursor-pointer">✕</button>
+            <div id="modal-contenido" class="w-full flex flex-col md:flex-row"></div>
+        </div>
+    </div>
+
+    <!-- NUEVO MODAL DETALLE EXPANDIDO (ESTILO MERCADO LIBRE LIGHTBOX) -->
+    <div id="modal-zoom-externo" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" onclick="ocultarZoomExterno()">
+        <button onclick="ocultarZoomExterno()" class="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center text-xl font-light transition cursor-pointer" title="Cerrar vista completa">✕</button>
+        <div class="max-w-4xl max-h-[85vh] flex items-center justify-center" onclick="event.stopPropagation()">
+            <img id="img-zoom-maximizada" src="" alt="Zoom Producto" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl select-none">
+        </div>
+    </div>
+
+    <script>
+        let todosLosProductos = [];
+        let carrito = []; 
+        let indicesImagenes = {}; 
+        let categoriaSeleccionada = 'Todos';
+        let subcategoriaSeleccionada = 'Todas';
+        let miSwiperModal = null;
+
+        async function cargarProductos() {
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/productos');
+                const datos = await respuesta.json();
+                
+                todosLosProductos = datos;
+                crearBotonesFiltros();
+                crearBotonesSubcategorias();
+                mostrarProductos(todosLosProductos);
+            } catch (error) {
+                console.error("Error al cargar productos:", error);
+                document.getElementById('grilla-productos').innerHTML = `<p class="text-center text-red-500 font-bold col-span-full">Error al conectar con el servidor.</p>`;
+            }
+        }
+
+        function mostrarProductos(lista) {
+            const grilla = document.getElementById('grilla-productos');
+            grilla.innerHTML = ''; 
+
+            if(lista.length === 0) {
+                grilla.innerHTML = `<p class="text-center text-gray-400 col-span-full py-12 font-medium text-sm">No encontramos productos en esta sección.</p>`;
+                return;
+            }
+
+            lista.forEach((prod) => {
+                const indiceOriginal = todosLosProductos.indexOf(prod);
+                const precioFormateado = prod.precio ? `$${Number(prod.precio).toLocaleString('es-AR')}` : 'Consultar';
+
+                if (indicesImagenes[indiceOriginal] === undefined) {
+                    indicesImagenes[indiceOriginal] = 0;
+                }
+                const tieneMultiplesFotos = prod.imagenes && prod.imagenes.length > 1;
+
+                const card = `
+                    <div class="bg-white rounded-2xl border border-malva-100/60 overflow-hidden hover:shadow-lg hover:border-malva-300/40 transition-all duration-300 flex flex-col justify-between h-full">
+                        <div class="h-56 w-full bg-white p-4 overflow-hidden flex items-center justify-center relative group border-b border-malva-50 cursor-pointer" onclick="verDetalles(${indiceOriginal})">
+                            <img id="img-${indiceOriginal}" src="${prod.imagenes[indicesImagenes[indiceOriginal]]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain transition duration-300 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/300x300?text=Malva+Bienestar'">
+                            ${tieneMultiplesFotos ? `
+                                <button onclick="event.stopPropagation(); cambiarFoto(${indiceOriginal}, -1)" class="absolute left-2 bg-malva-700/80 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-malva-700 transition opacity-0 group-hover:opacity-100 text-xs shadow-md z-10 cursor-pointer">◀</button>
+                                <button onclick="event.stopPropagation(); cambiarFoto(${indiceOriginal}, 1)" class="absolute right-2 bg-malva-700/80 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-malva-700 transition opacity-0 group-hover:opacity-100 text-xs shadow-md z-10 cursor-pointer">▶</button>
+                                <span id="badge-${indiceOriginal}" class="absolute bottom-3 right-3 bg-malva-700/80 text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full tracking-wider">${indicesImagenes[indiceOriginal] + 1} / ${prod.imagenes.length}</span>
+                            ` : ''}
+                        </div>
+
+                        <div class="p-5 flex-grow flex flex-col justify-between">
+                            <div class="cursor-pointer" onclick="verDetalles(${indiceOriginal})">
+                                <div class="flex flex-wrap gap-1 justify-between items-center mb-2">
+                                    <div class="flex gap-1 flex-wrap">
+                                        <span class="text-[10px] font-bold uppercase tracking-widest text-malva-700 bg-malva-100 px-2.5 py-1 rounded-md">${prod.categoria || 'General'}</span>
+                                        ${prod.subcategoria ? `<span class="text-[10px] font-medium text-malva-900 bg-malva-300/40 px-2 py-1 rounded-md">${prod.subcategoria}</span>` : ''}
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-mono">Cod: ${prod.codigo || '-'}</span>
+                                </div>
+                                <h3 class="text-sm font-semibold text-gray-800 mb-1 line-clamp-2 min-h-[2.5rem] hover:text-malva-700 transition">${prod.nombre}</h3>
+                                <p class="text-xs text-gray-400 mb-2">Marca: ${prod.marca || 'No especifica'}</p>
+                                <p class="text-xs text-gray-400 line-clamp-1 italic mb-4">${prod.descripcion || 'Sin descripción.'}</p>
+                            </div>
+                            <div>
+                                <div class="pt-3 border-t border-malva-50 flex items-center justify-between gap-1">
+                                    <span class="text-lg font-bold text-malva-700">${precioFormateado}</span>
+                                    <div class="flex gap-1">
+                                        <button onclick="verDetalles(${indiceOriginal})" class="bg-malva-50 text-malva-700 p-2 rounded-xl hover:bg-malva-100 transition text-sm cursor-pointer" title="Ver detalles">🔍</button>
+                                        <button onclick="agregarAlCarrito(${indiceOriginal})" class="bg-malva-700 text-white text-xs font-medium py-2 px-3 rounded-xl hover:bg-malva-900 transition flex items-center gap-1 cursor-pointer">
+                                            Añadir 🛒
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grilla.innerHTML += card;
+            });
+        }
+
+        function cambiarFoto(index, direccion) {
+            const prod = todosLosProductos[index];
+            if (!prod || !prod.imagenes) return;
+            
+            let nuevoIndice = indicesImagenes[index] + direccion;
+            if (nuevoIndice >= prod.imagenes.length) nuevoIndice = 0;
+            if (nuevoIndice < 0) nuevoIndice = prod.imagenes.length - 1;
+            
+            indicesImagenes[index] = nuevoIndice;
+            document.getElementById(`img-${index}`).src = prod.imagenes[nuevoIndice];
+            
+            const badge = document.getElementById(`badge-${index}`);
+            if (badge) {
+                badge.innerText = `${nuevoIndice + 1} / ${prod.imagenes.length}`;
+            }
+        }
+
+        function agregarAlCarrito(index) {
+            const prod = todosLosProductos[index];
+            if (!prod) return;
+
+            const itemExistente = carrito.find(item => item.nombre === prod.nombre);
+
+            if (itemExistente) {
+                itemExistente.cantidad += 1;
+            } else {
+                carrito.push({
+                    indexOriginal: index,
+                    nombre: prod.nombre,
+                    precio: Number(prod.precio) || 0,
+                    imagen: prod.imagenes[0],
+                    codigo: prod.codigo || '',
+                    cantidad: 1
+                });
+            }
+
+            actualizarInterfazCarrito();
+            
+            const botonFlotante = document.querySelector('button[onclick="alternarCarrito()"]');
+            botonFlotante.classList.add('scale-110');
+            setTimeout(() => botonFlotante.classList.remove('scale-110'), 300);
+        }
+
+        function cambiarCantidadCarrito(indexOriginal, cambio) {
+            const item = carrito.find(item => item.indexOriginal === indexOriginal);
+            if (!item) return;
+
+            item.cantidad += cambio;
+            if (item.cantidad <= 0) {
+                carrito = carrito.filter(item => item.indexOriginal !== indexOriginal);
+            }
+            actualizarInterfazCarrito();
+        }
+
+        function vaciarCarrito() {
+            if (confirm("¿Querés vaciar todo tu pedido actual?")) {
+                carrito = [];
+                document.getElementById('nombre-cliente').value = '';
+                document.getElementById('metodo-pago').value = 'Efectivo / Transferencia';
+                document.getElementById('wrapper-btn-mp').classList.add('hidden');
+                document.getElementById('nombre-cliente').classList.remove('border-red-400', 'bg-red-50/50');
+                actualizarInterfazCarrito();
+            }
+        }
+
+        function actualizarInterfazCarrito() {
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            document.getElementById('badge-contador-carrito').innerText = totalItems;
+
+            const contenedor = document.getElementById('items-carrito');
+            const btnVaciar = document.getElementById('btn-vaciar-carrito');
+            const wrapperNombre = document.getElementById('wrapper-nombre-cliente');
+            
+            if (carrito.length === 0) {
+                contenedor.innerHTML = `<p class="text-center text-gray-400 py-12 font-medium text-xs">El pedido está vacío.</p>`;
+                document.getElementById('total-carrito').innerText = "$0";
+                btnVaciar.classList.add('hidden');
+                wrapperNombre.classList.add('hidden');
+                return;
+            }
+
+            btnVaciar.classList.remove('hidden');
+            wrapperNombre.classList.remove('hidden');
+            
+            let dineroTotal = 0;
+            let htmlAcumulado = ''; 
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                dineroTotal += subtotal;
+
+                htmlAcumulado += `
+                    <div class="flex items-center justify-between gap-3 p-3 bg-malva-50/60 rounded-xl border border-malva-100/40">
+                        <img src="${item.imagen}" class="w-11 h-11 object-contain bg-white p-1 rounded-lg border border-malva-100 flex-shrink-0">
+                        <div class="flex-grow min-w-0">
+                            <h4 class="text-xs font-semibold text-gray-800 truncate">${item.nombre}</h4>
+                            <p class="text-xs text-malva-700 font-bold">$${item.precio.toLocaleString('es-AR')}</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 flex-shrink-0">
+                            <button onclick="cambiarCantidadCarrito(${item.indexOriginal}, -1)" class="w-6 h-6 bg-white border border-malva-100 rounded-lg flex items-center justify-center text-xs font-bold hover:bg-malva-50 text-gray-600 shadow-xs cursor-pointer">-</button>
+                            <span class="text-xs font-bold text-gray-800 w-4 text-center">${item.cantidad}</span>
+                            <button onclick="cambiarCantidadCarrito(${item.indexOriginal}, 1)" class="w-6 h-6 bg-white border border-malva-100 rounded-lg flex items-center justify-center text-xs font-bold hover:bg-malva-50 text-gray-600 shadow-xs cursor-pointer">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            contenedor.innerHTML = htmlAcumulado;
+            document.getElementById('total-carrito').innerText = `$${dineroTotal.toLocaleString('es-AR')}`;
+            
+            const txtRecordatorio = document.getElementById('monto-recordatorio');
+            if (txtRecordatorio) {
+                txtRecordatorio.innerText = dineroTotal.toLocaleString('es-AR');
+            }
+        }
+
+        function alternarCarrito() {
+            const panel = document.getElementById('panel-carrito');
+            panel.classList.toggle('hidden');
+        }
+
+        function alternarBotonMercadoPago() {
+            const metodo = document.getElementById('metodo-pago').value;
+            const btnMp = document.getElementById('wrapper-btn-mp');
+            if (metodo === 'Market Pago' || metodo === 'Mercado Pago') {
+                btnMp.classList.remove('hidden');
+            } else {
+                btnMp.classList.add('hidden');
+            }
+        }
+
+        function enviarPedidoWhatsApp() {
+            if (carrito.length === 0) return;
+
+            const inputNombre = document.getElementById('nombre-cliente');
+            const nombreCliente = inputNombre.value.trim();
+            const metodoPago = document.getElementById('metodo-pago').value;
+
+            if (nombreCliente === "") {
+                inputNombre.classList.add('border-red-400', 'bg-red-50/50');
+                inputNombre.focus();
+                alert("Por favor, ingresá tu nombre para enviarnos la consulta.");
+                return;
+            } else {
+                inputNombre.classList.remove('border-red-400', 'bg-red-50/50');
+            }
+
+            let mensaje = `👤 *CLIENTE:* ${nombreCliente}\n`;
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                const cod = item.codigo ? `[Cod: ${item.codigo}]` : '';
+                mensaje += `${index + 1}) *${item.nombre}* ${cod}\n   👉 Unidades: ${item.cantidad} x $${item.precio.toLocaleString('es-AR')} | Subtotal: *$${subtotal.toLocaleString('es-AR')}*\n\n`;
+            });
+
+            mensaje += `=========================\n`;
+            mensaje += `💰 *TOTAL ESTIMADO: $${total.toLocaleString('es-AR')}*\n=========================\n\n`;
+            mensaje += `Hola Malva, ¿me confirmarían stock disponible de estos productos? ¡Muchas gracias!`;
+
+            const nroTelefono = "+5491133998888"; 
+            const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function filtrarYBuscar() {
+            const textoBusqueda = document.getElementById('input-busqueda').value.toLowerCase().trim();
+
+            const productosFiltrados = todosLosProductos.filter(prod => {
+                const pasaCategoria = (categoriaSeleccionada === 'Todos' || prod.categoria === categoriaSeleccionada);
+                const pasaSubcategoria = (subcategoriaSeleccionada === 'Todas' || prod.subcategoria === subcategoriaSeleccionada);
+                
+                const pasaBusqueda = (prod.nombre || '').toLowerCase().includes(textoBusqueda) || 
+                                     (prod.marca || '').toLowerCase().includes(textoBusqueda) || 
+                                     (prod.codigo || '').toLowerCase().includes(textoBusqueda) ||
+                                     (prod.descripcion || '').toLowerCase().includes(textoBusqueda);
+                                     
+                return pasaCategoria && pasaSubcategoria && pasaBusqueda;
+            });
+
+            mostrarProductos(productosFiltrados);
+        }
+
+        function seleccionarCategoria(cat) {
+            categoriaSeleccionada = cat;
+            subcategoriaSeleccionada = 'Todas'; 
+            crearBotonesFiltros();
+            crearBotonesSubcategorias();
+            filtrarYBuscar();
+        }
+
+        function seleccionarSubcategoria(subcat) {
+            subcategoriaSeleccionada = subcat;
+            crearBotonesSubcategorias();
+            filtrarYBuscar();
+        }
+
+        function crearBotonesFiltros() {
+            const contenedor = document.getElementById('contenedor-filtros');
+            const categoriasUnicas = ['Todos', ...new Set(todosLosProductos.map(p => p.categoria).filter(Boolean))];
+            contenedor.innerHTML = ''; 
+            
+            categoriasUnicas.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.innerText = cat;
+                if (cat === categoriaSeleccionada) {
+                    btn.className = "px-4 py-1.5 bg-malva-700 text-white rounded-full text-xs font-semibold tracking-wide transition shadow-xs border border-malva-700 cursor-pointer";
+                } else {
+                    btn.className = "px-4 py-1.5 bg-white text-gray-600 rounded-full text-xs font-semibold tracking-wide transition border border-gray-200 hover:bg-malva-50/50 cursor-pointer";
+                }
+                btn.onclick = () => seleccionarCategoria(cat);
+                contenedor.appendChild(btn);
+            });
+        }
+
+        function crearBotonesSubcategorias() {
+            const contenedorSub = document.getElementById('contenedor-subfiltros');
+            contenedorSub.innerHTML = '';
+
+            if (categoriaSeleccionada === 'Todos') return;
+
+            const subcategoriasUnicas = [...new Set(
+                todosLosProductos
+                    .filter(p => p.categoria === categoriaSeleccionada && p.subcategoria)
+                    .map(p => p.subcategoria)
+            )];
+
+            if (subcategoriasUnicas.length > 0) {
+                const listaFiltrosSub = ['Todas', ...subcategoriasUnicas];
+                listaFiltrosSub.forEach(sub => {
+                    const btn = document.createElement('button');
+                    btn.innerText = sub;
+                    if (sub === subcategoriaSeleccionada) {
+                        btn.className = "px-3 py-1 bg-malva-900 text-white rounded-lg text-[11px] font-medium border border-malva-900 cursor-pointer";
+                    } else {
+                        btn.className = "px-3 py-1 bg-white text-gray-500 rounded-lg text-[11px] font-medium border border-gray-200 hover:bg-malva-50/40 cursor-pointer";
+                    }
+                    btn.onclick = () => seleccionarSubcategoria(sub);
+                    contenedorSub.appendChild(btn);
+                });
+            }
+        }
+
+        // DETALLE MEJORADO: CAROUSEL SWIPER + BOTÓN DE LUPA PARA MAXIMIZAR APARTE (ESTILO LIGHTBOX)
+        function verDetalles(index) {
+            const prod = todosLosProductos[index];
+            if (!prod) return;
+
+            const precioFormateado = prod.precio ? `$${Number(prod.precio).toLocaleString('es-AR')}` : 'Consultar';
+            const imagenesArray = prod.imagenes && prod.imagenes.length > 0 ? prod.imagenes : ['https://via.placeholder.com/300x300?text=Malva+Bienestar'];
+            
+            let slidesHtml = '';
+            imagenesArray.forEach(url => {
+                slidesHtml += `
+                    <div class="swiper-slide flex items-center justify-center w-full h-full p-4 bg-white relative">
+                        <!-- Al hacer clic en la foto o en el botón flotante de la lupa, se abre el zoom aparte -->
+                        <img src="${url}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain rounded-xl select-none cursor-zoom-in" onclick="mostrarZoomExterno('${url}')" onerror="this.src='https://via.placeholder.com/300x300?text=Malva+Bienestar'">
+                        
+                        <button onclick="mostrarZoomExterno('${url}')" class="absolute bottom-4 left-4 bg-white/90 text-malva-700 hover:bg-white border border-malva-100 w-9 h-9 rounded-full flex items-center justify-center shadow-md transition z-20 cursor-pointer" title="Ver pantalla completa">
+                            🔍
+                        </button>
+                    </div>
+                `;
+            });
+
+            const contenedorModal = document.getElementById('modal-contenido');
+            
+            contenedorModal.innerHTML = `
+                <!-- Bloque Izquierdo: Galería Swiper con lupa independiente -->
+                <div class="w-full md:w-1/2 bg-gray-50/50 p-4 flex items-center justify-center border-b md:border-b-0 md:border-r border-malva-100/50">
+                    <div class="swiper swiperModalContenedor w-full h-64 sm:h-80 bg-white rounded-xl overflow-hidden relative border border-malva-100/40">
+                        <div class="swiper-wrapper">
+                            ${slidesHtml}
+                        </div>
+                        ${imagenesArray.length > 1 ? `
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <!-- Bloque Derecho: Información del Producto -->
+                <div class="w-full md:w-1/2 p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap gap-1 items-center mb-3">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-malva-700 bg-malva-100 px-2.5 py-1 rounded-md">${prod.categoria || 'General'}</span>
+                            ${prod.subcategoria ? `<span class="text-[10px] font-medium text-malva-900 bg-malva-300/40 px-2 py-1 rounded-md">${prod.subcategoria}</span>` : ''}
+                            <span class="text-[10px] text-gray-400 font-mono ml-auto">Cod: ${prod.codigo || '-'}</span>
+                        </div>
+
+                        <h3 class="text-lg font-serif font-bold text-gray-800 mb-2 leading-snug">${prod.nombre}</h3>
+                        <p class="text-xs text-gray-400 mb-4">Marca: <strong class="text-gray-600 font-medium">${prod.marca || 'No especifica'}</strong></p>
+                        
+                        <div class="text-xs text-gray-500 leading-relaxed bg-malva-50/40 border border-malva-100/30 p-3 rounded-xl mb-4 whitespace-pre-line max-h-36 overflow-y-auto">
+                            ${prod.descripcion || 'Sin descripción disponible.'}
+                        </div>
+
+                        <div class="bg-malva-50 border border-malva-100/60 rounded-xl p-3 mb-6">
+                            <span class="text-[11px] font-medium text-malva-700 block mb-0.5">Precio de Lista</span>
+                            <span class="text-2xl font-bold text-malva-900">${precioFormateado}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="agregarAlCarrito(${index}); ocultarModal();" class="w-full bg-malva-700 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-malva-900 transition flex items-center justify-center gap-2 text-xs tracking-wide cursor-pointer">
+                        Agregar este artículo al Pedido 🛒
+                    </button>
+                </div>
+            `;
+
+            if (miSwiperModal) { miSwiperModal.destroy(true, true); }
+
+            document.getElementById('modal-producto').classList.remove('hidden');
+
+            miSwiperModal = new Swiper('.swiperModalContenedor', {
+                loop: imagenesArray.length > 1,
+                spaceBetween: 10,
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                observer: true,
+                observeParents: true
+            });
+        }
+
+        // LÓGICA DEL SEGUNDO MODAL PARA EL ENFOQUE EXTERNO (ESTILO MERCADO LIBRE)
+        function mostrarZoomExterno(urlImagen) {
+            const imgMax = document.getElementById('img-zoom-maximizada');
+            imgMax.src = urlImagen;
+            document.getElementById('modal-zoom-externo').classList.remove('hidden');
+        }
+
+        function ocultarZoomExterno() {
+            document.getElementById('modal-zoom-externo').classList.add('hidden');
+        }
+
+        function ocultarModal() {
+            document.getElementById('modal-producto').classList.add('hidden');
+        }
+
+        function alternarFaq(btn) {
+            const respuesta = btn.nextElementSibling;
+            const icono = btn.querySelector('span:last-child');
+            
+            if (respuesta.style.maxHeight && respuesta.style.maxHeight !== '0px') {
+                respuesta.style.maxHeight = '0px';
+                icono.style.transform = 'rotate(0deg)';
+            } else {
+                respuesta.style.maxHeight = respuesta.scrollHeight + 'px';
+                icono.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", cargarProductos);
+    </script>
+</body>
+</html>
